@@ -42,6 +42,13 @@ define(`xs_domain_label', `
   allow $2 $3 : xenstore { bind };
 ')
 
+# xs_path_label(parent_node, child_path, result)
+#
+# Create a labeling rule for Xenstore paths that match
+# a "CTX" entry in the path database.  'parent_node' is
+# the label of the parent node.  'child_path' is the
+# path label of the child node being created, and 'result'
+# is the result label for the new node.
 define(`xs_path_label', `
   type_transition $1 $2 : xenstore $3;
   allow $1 $3 : xenstore { bind };
@@ -52,6 +59,7 @@ define(`xs_path_label', `
 # Define a domain's base Xenstore policy.  'domain' is the domain's
 # base name (without the "_t" suffix for its type).
 define(`xs_domain', `
+  type $1_t, domain_type;
   attribute xs_$1_type;
 
   # Type and label of "/local/domain/*".
@@ -64,8 +72,12 @@ define(`xs_domain', `
 
 # xs_control_domain(domain, control)
 #
-# Define the control domain for a domain that uses Xenstore.  Both 'domain'
-# and 'control' are the domain's base name (without the "_t" suffix).
+# Define the control domain for a domain that uses Xenstore.
+# The control domain is allowed access to the domain's nodes,
+# as well as permission to assign DAC ownership.
+#
+# Both 'domain' and 'control' are the domain's base name
+# (without the "_t" suffix).
 define(`xs_control_domain', `
   # Allow the control domain all permissions to our nodes.
   allow $2_t xs_$1_type : xenstore
@@ -73,6 +85,12 @@ define(`xs_control_domain', `
 
   # Allow the control domain to introduce us to Xenstore.
   allow $2_t $1_t : xenstore { introduce };
+
+  # Allow the control domain to give DAC ownership of
+  # nodes to the domain being controlled.
+  allow $2_t $2_t : xenstore { chown_from };
+  allow $2_t $1_t : xenstore { chown_to };
+  allow $2_t $1_t : xenstore { chown_transition };
 ')
 
 # xs_console_domain(domain, console_domain)

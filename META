@@ -1,3 +1,5 @@
 version = "0.1"
 description = "Flask security policy for Xenstore"
+archive(byte) = "flask_gen.cmo"
+archive(native) = "flask_gen.cmx"
 

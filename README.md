@@ -3,4 +3,3 @@
 
 Standalone security policy for the Mirage Xenstore using
 libsepol.
-

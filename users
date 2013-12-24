@@ -1,0 +1,15 @@
+#
+# users.te --- User and role definitions
+#
+# Copyright (C) 2013, Galois, Inc.
+# All Rights Reserved.
+#
+
+# Domains are allowed in the system_r role for compatibility
+# with XSM policy.
+role system_r;
+role system_r types { domain_type };
+
+user system_u roles { system_r };
+
+# vim: set ft=te ts=2 et:

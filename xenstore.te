@@ -40,10 +40,10 @@ dontaudit domain_type xs_node     : xenstore { override };
 
 define_xs_path(xs_local_domain_path_t)
 define_xs_path(xs_vbd_backend_path_t)
-define_xs_path(xs_vtpm_backend_path_t)
+define_xs_path(xs_vif_backend_path_t)
 define_xs_path(xs_generic_backend_path_t)
 define_xs_path(xs_vbd_frontend_path_t)
-define_xs_path(xs_vtpm_frontend_path_t)
+define_xs_path(xs_vif_frontend_path_t)
 define_xs_path(xs_tool_xenstore_path_t)
 define_xs_path(xs_console_path_t)
 
@@ -68,12 +68,25 @@ xs_path_label(xs_root_t, xs_local_domain_path_t, xs_local_domain_t)
 define_xs_node(xs_tool_xenstore_t)
 xs_path_label(xs_root_t, xs_tool_xenstore_path_t, xs_tool_xenstore_t)
 
-allow xs_root_t xs_root_t : xenstore *;
-
 ######################################################################
-## Users and Roles
+## System Policy
 
-role system_r;
-user system_u roles { system_r };
+# Privileged dom0 domain, supplying device backends.
+xs_domain(dom0)
+xs_priv_domain(dom0)
+xs_device_backend(dom0, vbd)
+xs_device_backend(dom0, vif)
+
+# Xenstore domain.
+xs_domain(xenstore)
+xs_control_domain(xenstore, dom0)
+xs_console_domain(xenstore, dom0)
+
+# Unprivileged "domU" domains.
+xs_domain(domU)
+xs_control_domain(domU, dom0)
+xs_console_domain(domU, dom0)
+xs_device(domU, dom0, vbd)
+xs_device(domU, dom0, vif)
 
 # vim: set ft=te ts=2 et:
