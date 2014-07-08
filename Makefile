@@ -11,14 +11,18 @@ FLASK_FILES_POST  := users initial_sid_defs
 POLICY_FILES      := xenstore.if xenstore.te
 POLICY_VERSION    := 24
 POLICY            := xenstore.$(POLICY_VERSION)
+RAMDISK           := xenstore-ramdisk
 
 CHECKPOLICY       := checkpolicy -c $(POLICY_VERSION)
 ALL_FILES         := $(FLASK_FILES_PRE) $(POLICY_FILES) $(FLASK_FILES_POST)
 
 INSTALL_FILES     := META xenstore.24 _build/flask_gen.cmi _build/flask_gen.cmo \
-                     _build/flask_gen.cmx _build/flask_gen.o
+                     _build/flask_gen.cmx _build/flask_gen.o $(RAMDISK)
 
-build: $(POLICY) _build/flask_gen.cmx
+build: $(RAMDISK) _build/flask_gen.cmx
+
+$(RAMDISK): $(POLICY) path-db.txt context-db.txt
+	ls $^ | cpio --quiet --create --dereference --format odc > $@
 
 $(POLICY): policy.conf
 	$(CHECKPOLICY) -o $@ policy.conf
@@ -38,7 +42,7 @@ flask_gen.ml: $(ALL_FILES)
 
 clean:
 	ocamlbuild -clean
-	rm -rf include policy.conf $(POLICY)
+	rm -rf include policy.conf $(POLICY) $(RAMDISK)
 
 install: build
 	ocamlfind install xenstore-policy $(INSTALL_FILES)

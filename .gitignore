@@ -1,4 +1,5 @@
 xenstore.24
+xenstore-ramdisk
 policy.conf
 include
 flask_gen.ml

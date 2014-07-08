@@ -1,0 +1,7 @@
+user system_u system_u
+role system_r system_r
+role object_r object_r
+type unlabeled_t unlabeled_t
+type xenstore_t xenstore_t
+type dom0_t dom0_t
+type domU_t domU_t

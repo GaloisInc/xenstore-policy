@@ -1,0 +1,13 @@
+ctx /local/domain xs_local_domain_path_t
+dom /local/domain/*
+ctx /local/domain/*/backend/vbd xs_vbd_backend_path_t
+dom /local/domain/*/backend/vbd/*
+ctx /local/domain/*/backend/vif xs_vif_backend_path_t
+dom /local/domain/*/backend/vif/*
+ctx /local/domain/*/backend/* xs_generic_backend_path_t
+dom /local/domain/*/backend/*/*
+ctx /local/domain/*/device/vbd xs_vbd_frontend_path_t
+ctx /local/domain/*/device/vif xs_vif_frontend_path_t
+ctx /local/domain/*/console xs_console_path_t
+ctx /tool/xenstored xs_tool_xenstore_path_t
+dom /tool/xenstored/connection/domain/*
