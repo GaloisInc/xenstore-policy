@@ -4,6 +4,9 @@
 # Copyright (C) 2013, Galois, Inc.
 # All Rights Reserved.
 #
+# Released under the BSD3 license.  See the file "LICENSE"
+# for details.
+#
 
 # Domains are allowed in the system_r role for compatibility
 # with XSM policy.

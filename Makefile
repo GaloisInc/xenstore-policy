@@ -4,6 +4,9 @@
 # Copyright (C) 2013, Galois, Inc.
 # All Rights Reserved.
 #
+# Released under the BSD3 license.  See the file "LICENSE"
+# for details.
+#
 
 FLASK_FILES_PRE   := security_classes initial_sids access_vectors
 FLASK_FILES_POST  := users initial_sid_defs

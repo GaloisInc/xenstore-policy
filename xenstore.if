@@ -4,6 +4,9 @@
 # Copyright (C) 2013, Galois, Inc.
 # All Rights Reserved.
 #
+# Released under the BSD3 license.  See the file "LICENSE"
+# for details.
+#
 
 # Restrict allow rules by source and target type.
 define(`only_allow', `
